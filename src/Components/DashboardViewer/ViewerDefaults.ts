@@ -1,9 +1,10 @@
-import { DVOptions, DVChartType } from "./DVOptions";
+import { ViewerOptions, ChartType } from "./ViewerOptions";
 
-export const DefaultOptions: DVOptions = {
+export const ViewerDefaults: ViewerOptions = {
     canEdit: true,
     canSave: true,
     canSaveAs: true,
+    saveOnServer: true,
     startInEditMode: false,
     startWithNewVisualization: false,
 
@@ -30,6 +31,7 @@ export const DefaultOptions: DVOptions = {
 
     dataSourceDialog: {
         showSearch: false,
+        dataSourceProviders: [],
     },
 
     visualizations: {
@@ -47,8 +49,8 @@ export const DefaultOptions: DVOptions = {
     },
 
     editor: {
-        chartTypes: Object.keys(DVChartType).map((k) => k as DVChartType),
-        defaultChartType: DVChartType.ColumnChart,        
+        chartTypes: Object.keys(ChartType).map((k) => k as ChartType),
+        defaultChartType: ChartType.ColumnChart,        
         canAddPostCalculatedFields: true,
         showAddCalculatedFields: true,
         showDataBlending: true,

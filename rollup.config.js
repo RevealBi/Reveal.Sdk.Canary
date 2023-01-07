@@ -14,7 +14,7 @@ export default [
             },
             {
                 file: packageJson.module,
-                format: "esm"
+                format: "esm",
             },
             {
                 name: "rvc",
@@ -25,7 +25,7 @@ export default [
         plugins: [
             commonjs(),
             typescript({ tsconfig: './tsconfig.json' }),
-            //terser(),
+            terser(),
         ]
     },
 ]

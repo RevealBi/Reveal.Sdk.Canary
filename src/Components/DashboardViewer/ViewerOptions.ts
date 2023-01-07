@@ -1,7 +1,8 @@
-export interface DVOptions {
+export interface ViewerOptions {
     canEdit: boolean;
     canSave: boolean;
     canSaveAs: boolean;
+    saveOnServer: boolean;
     startInEditMode: boolean;
     startWithNewVisualization: boolean;
 
@@ -15,7 +16,7 @@ export interface DVOptions {
             showExportToPowerPoint: boolean;
             showExportToPdf: boolean;
             showRefresh: boolean;
-            items: DVMenuItem[];
+            items: ViewerMenuItem[];
         }
     }
 
@@ -28,6 +29,7 @@ export interface DVOptions {
 
     dataSourceDialog: {
         showSearch: boolean;
+        dataSourceProviders: DataSourceProviderType[];
     }
 
     visualizations: {
@@ -40,13 +42,13 @@ export interface DVOptions {
         menu: {
             showCopy: boolean;
             showDuplicate: boolean;
-            items: DVMenuItem[];
+            items: ViewerMenuItem[];
         }
     }
 
     editor: {
-        chartTypes: DVChartType[];
-        defaultChartType: DVChartType;        
+        chartTypes: ChartType[];
+        defaultChartType: ChartType;        
         canAddPostCalculatedFields: boolean;        
         showAddCalculatedFields: boolean;
         showDataBlending: boolean;
@@ -55,13 +57,13 @@ export interface DVOptions {
     }
 }
 
-export interface DVMenuItem {
+export interface ViewerMenuItem {
     icon: string;
     title: string;
     click: (viz: any) => void;
 }
 
-export enum DVChartType {
+export enum ChartType {
     Pivot = "Pivot",
     Grid = "Grid",
     AreaChart = "AreaChart",
@@ -99,4 +101,28 @@ export enum DVChartType {
     Choropleth = "Choropleth",
     ScatterMap = "ScatterMap",
     TimeSeriesChart = "TimeSeriesChart"
+}
+
+export enum DataSourceProviderType {
+    AzureSqlServer,
+    AzureSynapse,
+    GoogleAnalytics,
+    GoogleBigQuery,
+    MicrosoftSqlServer,
+    MySql,
+    Oracle,
+    Postgres,
+    Sybase,
+    WebResource,
+    Rest,
+    S3,
+    GoogleDrive,
+    GoogleSearchConsole,
+    OneDrive,
+    Dropbox,
+    Box,
+    MicrosoftDynamics,
+    MicrosoftAnalysisServices,
+    MicrosoftReportingServices,
+    AmazonRedshift
 }

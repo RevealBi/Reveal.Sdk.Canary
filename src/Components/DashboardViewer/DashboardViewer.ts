@@ -1,26 +1,23 @@
-import { DVOptions } from "./DVOptions";
-import { DefaultOptions } from "./DVOptions.Defaults";
+import { ViewerOptions } from "./ViewerOptions";
+import { ViewerDefaults } from "./ViewerDefaults";
 import { merge } from "../../Utilties/Merge";
 
 declare let $: any;
 
 export class DashboardViewer {
     private revealView: any = null;    
-    static defaultOptions: DVOptions = DefaultOptions;    
-    options: DVOptions = DashboardViewer.defaultOptions;
-    dataSourcesRequested: ((onComplete: any, trigger: any) => void) | null = null;
+    static defaultOptions: ViewerOptions = ViewerDefaults;    
+    options: ViewerOptions = DashboardViewer.defaultOptions;
 
     constructor(selector: string)
     constructor(selector: string, dashboard: any)
-    constructor(selector: string, dashboard: any, options: DVOptions)
-    constructor(selector: string, dashboard?: any, options?: DVOptions) {
-
+    constructor(selector: string, dashboard: any, options: Partial<ViewerOptions>)
+    constructor(selector: string, dashboard?: any, options?: Partial<ViewerOptions>) {
         $.ig.RevealSdkSettings.enableNewCharts = true;
-
-        this.#createRevealView(selector, dashboard, options);
+        this.init(selector, dashboard, options);
     }
 
-    async #createRevealView(selector: string, dashboard?: any, options?: Partial<DVOptions>): Promise<void> {
+    private async init(selector: string, dashboard?: any, options?: Partial<ViewerOptions>): Promise<void> {
 
         if (typeof dashboard === "string") {
             dashboard = await $.ig.RVDashboard.loadDashboard(dashboard);
@@ -31,7 +28,14 @@ export class DashboardViewer {
 
         this.updateOptions(options);
 
-        this.revealView.onDataSourcesRequested = this.dataSourcesRequested;
+        this.revealView.onDataSourcesRequested = this.onDataSourcesRequested;
+        this.revealView.onImageExported = this.onImageExported;
+        this.revealView.onLinkedDashboardProviderAsync = this.onLinkedDashboardRequested;
+        this.revealView.onSave = this.onSave;
+        this.revealView.onVisualizationSeriesColorAssigning = this.onSeriesColorAssigning;
+        this.revealView.onTooltipShowing = this.onTooltipShowing;
+        this.revealView.onVisualizationDataLoading = this.onDataLoading;
+        this.revealView.onVisualizationDataPointClicked = this.onDataPointClicked;
 
         this.revealView.onMenuOpening = (viz: any, e: any) => {
             if (viz === null) {
@@ -46,7 +50,15 @@ export class DashboardViewer {
                     e.menuItems.push(new $.ig.RVMenuItem(vizItem.title, vizItem.icon, () => vizItem.click(viz)));
                 })
             }
+
+            if (this.onMenuOpening !== undefined) {
+                this.onMenuOpening(viz, e);
+            }            
         }
+    }
+
+    exportToImage() : Promise<Element | null> {
+        return this.revealView.toImage();
     }
 
     async loadDashboard(dashboard: any): Promise<void> {
@@ -56,7 +68,11 @@ export class DashboardViewer {
         this.revealView.dashboard = dashboard;
     }
 
-    updateOptions(options: Partial<DVOptions> | undefined) {
+    refresh() {
+        this.revealView.refreshDashboardData();
+    }
+
+    updateOptions(options: Partial<ViewerOptions> | undefined) {
 
         if (options === undefined) {
             this.options = DashboardViewer.defaultOptions;
@@ -68,7 +84,7 @@ export class DashboardViewer {
         this.revealView.canEdit = this.options.canEdit;
         this.revealView.canSave = this.options.canSave;
         this.revealView.canSaveAs = this.options.canSaveAs;
-
+        this.revealView.serverSideSave = this.options.saveOnServer;
         this.revealView.startInEditMode = this.options.startInEditMode;
         this.revealView.startWithNewVisualization = this.options.startWithNewVisualization;
 
@@ -80,6 +96,7 @@ export class DashboardViewer {
         this.revealView.showExportImage = this.options.header.menu.showExportToImage;
         this.revealView.showExportToPDF = this.options.header.menu.showExportToPdf;
         this.revealView.showExportToPowerpoint = this.options.header.menu.showExportToPowerPoint;
+        this.revealView.showRefresh = this.options.header.menu.showRefresh;
 
         //filters
         this.revealView.showFilters = this.options.filters.showFilters;
@@ -99,6 +116,7 @@ export class DashboardViewer {
 
         //dataSourceDialog
         this.revealView.showDataSourceSelectionDialogSearch = this.options.dataSourceDialog.showSearch;
+        this.revealView.addDataSourceEnabledProviders = this.options.dataSourceDialog.dataSourceProviders;
 
         //editor
         this.revealView.availableChartTypes = this.options.editor.chartTypes;
@@ -110,4 +128,26 @@ export class DashboardViewer {
         this.revealView.showMachineLearningModelsIntegration = this.options.editor.showMachineLearning;
 
     }
+
+    updateLayout() {
+        this.revealView.updateSize();
+    }
+
+    updateTheme() {
+        this.revealView.refreshTheme();
+    }
+
+    onDataLoading?: (args: any) => void;
+    onDataPointClicked?: (vizualization: any, cell: any, row: any) => void;
+    onDataSourcesRequested?: (onComplete: any, trigger: any) => void;
+    onEditorClosed?: (args: any) => void;
+    onEditorClosing?: (args: any) => void;
+    onEditorOpened?: (args: any) => void;
+    onEditorOpening?: (args: any) => void;
+    onImageExported?: (image: any) => void;
+    onLinkedDashboardRequested?: (dashboardId: any, title: any) => Promise<any>;
+    onMenuOpening?: (vizualization: any, args: any) => void;
+    onSave?: (rv:any, args: any) => void;
+    onSeriesColorAssigning?: (visualization: any, defaultColor: any, fieldName: any, categoryName: any) => void;
+    onTooltipShowing?: (args: any) => void;
 }

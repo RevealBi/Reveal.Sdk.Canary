@@ -1,25 +1,10 @@
-import { DashboardViewer, DVChartType } from "../dist/esm/index.js";
+import { DashboardViewer } from "../dist/esm/index.js";
 
-// const dashboard = await $.ig.RVDashboard.loadDashboard("Sales");
+//const dashboard = await $.ig.RVDashboard.loadDashboard("Marketing");
 
-var dv = new DashboardViewer("#viewer", "Sales", {
-    canEdit: true,
-    header: {
-        menu: {
-            showExportToPdf: false,
-            showExportToImage: false,
-            items: [
-                {
-                    title: "My Menu Item", click: () => {
-                        console.log("I clicked this");
-                    }
-                }
-            ]
-        }
-    },
-});
+var dv = new DashboardViewer("#viewer", "Sales");
 
-dv.dataSourcesRequested = (onComplete) => {
+dv.onDataSourcesRequested = (onComplete) => {
     const restDataSource = new $.ig.RVRESTDataSource();
     restDataSource.id = "RestDataSource"
     restDataSource.url = "https://excel2json.io/api/share/6e0f06b3-72d3-4fec-7984-08da43f56bb9";
@@ -29,3 +14,6 @@ dv.dataSourcesRequested = (onComplete) => {
 
     onComplete(new $.ig.RevealDataSources([restDataSource], [], true));
 }
+
+
+

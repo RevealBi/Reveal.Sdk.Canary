@@ -1,1 +1,1 @@
-export { DashboardViewer, DVOptions, DVChartType, DVMenuItem } from "./Components/DashboardViewer";
+export { DashboardViewer, ViewerOptions, ViewerMenuItem, ChartType, DataSourceProviderType } from "./Components/DashboardViewer";
