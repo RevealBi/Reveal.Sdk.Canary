@@ -15,5 +15,10 @@ dv.onDataSourcesRequested = (onComplete) => {
     onComplete(new $.ig.RevealDataSources([restDataSource], [], true));
 }
 
+const btn = document.getElementById("button");
+btn.addEventListener('click', (event) => {
+
+});
+
 
 

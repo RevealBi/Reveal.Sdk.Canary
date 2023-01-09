@@ -57,8 +57,26 @@ export class DashboardViewer {
         }
     }
 
-    exportToImage() : Promise<Element | null> {
-        return this.revealView.toImage();
+    exportToExcel() : void {
+        this.revealView._dashboardView.exportToExcel();
+    }
+
+    exportToImage(showDialog: boolean = true) : void | Promise<Element | null> {
+
+        if (showDialog) {
+            this.revealView._dashboardView.exportImage();
+            return;
+        }
+
+        return this.revealView.toImage();        
+    }
+
+    exportToPdf() : void {
+        this.revealView._dashboardView.exportToFormat("pdf");
+    }
+
+    exportToPowerPoint() : void {
+        this.revealView._dashboardView.exportToFormat("pptx");
     }
 
     async loadDashboard(dashboard: any): Promise<void> {

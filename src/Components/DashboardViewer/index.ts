@@ -1,3 +1,13 @@
 export { DashboardViewer } from "./DashboardViewer";
 
-export { ViewerOptions, ViewerMenuItem, ChartType, DataSourceProviderType } from "./ViewerOptions";
+export { 
+    ChartType, 
+    DataSourceDialogOptions,
+    DataSourceProviderType,
+    EditorOptions,
+    FilterOptions,
+    HeaderOptions,
+    MenuItem,
+    ViewerOptions,
+    VisualizationOptions,    
+} from "./ViewerOptions";

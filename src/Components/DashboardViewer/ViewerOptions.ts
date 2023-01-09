@@ -5,62 +5,67 @@ export interface ViewerOptions {
     saveOnServer: boolean;
     startInEditMode: boolean;
     startWithNewVisualization: boolean;
+    header: HeaderOptions;
+    filters: FilterOptions;
+    dataSourceDialog: DataSourceDialogOptions;
+    visualizations: VisualizationOptions;
+    editor: EditorOptions;
+}
 
-    header: {
-        showHeader: boolean;
-        canAddVisualization: boolean;
-        menu: {
-            showMenu: boolean;
-            showExportToImage: boolean;
-            showExportToExcel: boolean;
-            showExportToPowerPoint: boolean;
-            showExportToPdf: boolean;
-            showRefresh: boolean;
-            items: ViewerMenuItem[];
-        }
-    }
+export interface DataSourceDialogOptions {
+    showSearch: boolean;
+    dataSourceProviders: DataSourceProviderType[];
+}
 
-    filters: {
-        interactiveFiltering: boolean;
-        showFilters: boolean;
-        canAddDateFilter: boolean;
-        canAddDashboardFiter: boolean;
-    }
+export interface EditorOptions {
+    chartTypes: ChartType[];
+    defaultChartType: ChartType;        
+    canAddPostCalculatedFields: boolean;        
+    showAddCalculatedFields: boolean;
+    showDataBlending: boolean;
+    showEditDataSource: boolean;
+    showMachineLearning: boolean;
+}
 
-    dataSourceDialog: {
-        showSearch: boolean;
-        dataSourceProviders: DataSourceProviderType[];
-    }
-
-    visualizations: {
-        canMaximize: boolean;
-        categoryGroupingSeparator: string;
-        crosshairs: boolean;
-        hoverTooltips: boolean;
-        showChangeChartType: boolean;
-        showStatisticalFunctions: boolean;
-        menu: {
-            showCopy: boolean;
-            showDuplicate: boolean;
-            items: ViewerMenuItem[];
-        }
-    }
-
-    editor: {
-        chartTypes: ChartType[];
-        defaultChartType: ChartType;        
-        canAddPostCalculatedFields: boolean;        
-        showAddCalculatedFields: boolean;
-        showDataBlending: boolean;
-        showEditDataSource: boolean;
-        showMachineLearning: boolean;
+export interface HeaderOptions {
+    canAddVisualization: boolean;
+    showHeader: boolean;
+    menu: {
+        showMenu: boolean;
+        showExportToImage: boolean;
+        showExportToExcel: boolean;
+        showExportToPowerPoint: boolean;
+        showExportToPdf: boolean;
+        showRefresh: boolean;
+        items: MenuItem[];
     }
 }
 
-export interface ViewerMenuItem {
+export interface FilterOptions {
+    interactiveFiltering: boolean;
+    showFilters: boolean;
+    canAddDateFilter: boolean;
+    canAddDashboardFiter: boolean;
+}
+
+export interface MenuItem {
     icon: string;
     title: string;
     click: (viz: any) => void;
+}
+
+export interface VisualizationOptions {
+    canMaximize: boolean;
+    categoryGroupingSeparator: string;
+    crosshairs: boolean;
+    hoverTooltips: boolean;
+    showChangeChartType: boolean;
+    showStatisticalFunctions: boolean;
+    menu: {
+        showCopy: boolean;
+        showDuplicate: boolean;
+        items: MenuItem[];
+    }
 }
 
 export enum ChartType {
