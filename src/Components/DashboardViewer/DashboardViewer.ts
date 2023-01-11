@@ -5,7 +5,7 @@ import { merge } from "../../Utilties/Merge";
 declare let $: any;
 
 export class DashboardViewer {
-    private revealView: any = null;    
+    private _revealView: any = null;    
     static defaultOptions: ViewerOptions = ViewerDefaults;    
     options: ViewerOptions = DashboardViewer.defaultOptions;
 
@@ -23,21 +23,22 @@ export class DashboardViewer {
             dashboard = await $.ig.RVDashboard.loadDashboard(dashboard);
         }
 
-        this.revealView = new $.ig.RevealView(selector);
-        this.revealView.dashboard = dashboard;
+        this._revealView = new $.ig.RevealView(selector);
+        this._revealView.dashboard = dashboard;
 
         this.updateOptions(options);
 
-        this.revealView.onDataSourcesRequested = this.onDataSourcesRequested;
-        this.revealView.onImageExported = this.onImageExported;
-        this.revealView.onLinkedDashboardProviderAsync = this.onLinkedDashboardRequested;
-        this.revealView.onSave = this.onSave;
-        this.revealView.onVisualizationSeriesColorAssigning = this.onSeriesColorAssigning;
-        this.revealView.onTooltipShowing = this.onTooltipShowing;
-        this.revealView.onVisualizationDataLoading = this.onDataLoading;
-        this.revealView.onVisualizationDataPointClicked = this.onDataPointClicked;
+        this._revealView.onDataSourceSelectionDialogShowing = this.onDataSourceSelectionDialogOpening;
+        this._revealView.onDataSourcesRequested = this.onDataSourcesRequested;
+        this._revealView.onImageExported = this.onImageExported;
+        this._revealView.onLinkedDashboardProviderAsync = this.onLinkedDashboardRequested;
+        this._revealView.onSave = this.onSave;
+        this._revealView.onVisualizationSeriesColorAssigning = this.onSeriesColorAssigning;
+        this._revealView.onTooltipShowing = this.onTooltipShowing;
+        this._revealView.onVisualizationDataLoading = this.onDataLoading;
+        this._revealView.onVisualizationDataPointClicked = this.onDataPointClicked;
 
-        this.revealView.onMenuOpening = (viz: any, e: any) => {
+        this._revealView.onMenuOpening = (viz: any, e: any) => {
             if (viz === null) {
                 const items = this.options.header.menu.items;
                 items.forEach(item => {
@@ -58,36 +59,36 @@ export class DashboardViewer {
     }
 
     exportToExcel() : void {
-        this.revealView._dashboardView.exportToExcel();
+        this._revealView._dashboardView.exportToExcel();
     }
 
     exportToImage(showDialog: boolean = true) : void | Promise<Element | null> {
 
         if (showDialog) {
-            this.revealView._dashboardView.exportImage();
+            this._revealView._dashboardView.exportImage();
             return;
         }
 
-        return this.revealView.toImage();        
+        return this._revealView.toImage();        
     }
 
     exportToPdf() : void {
-        this.revealView._dashboardView.exportToFormat("pdf");
+        this._revealView._dashboardView.exportToFormat("pdf");
     }
 
     exportToPowerPoint() : void {
-        this.revealView._dashboardView.exportToFormat("pptx");
+        this._revealView._dashboardView.exportToFormat("pptx");
     }
 
     async loadDashboard(dashboard: any): Promise<void> {
         if (typeof dashboard === "string") {
             dashboard = await $.ig.RVDashboard.loadDashboard(dashboard);
         }
-        this.revealView.dashboard = dashboard;
+        this._revealView.dashboard = dashboard;
     }
 
     refresh() {
-        this.revealView.refreshDashboardData();
+        this._revealView.refreshDashboardData();
     }
 
     updateOptions(options: Partial<ViewerOptions> | undefined) {
@@ -99,64 +100,65 @@ export class DashboardViewer {
             this.options = merge(this.options, options);
         }
 
-        this.revealView.canEdit = this.options.canEdit;
-        this.revealView.canSave = this.options.canSave;
-        this.revealView.canSaveAs = this.options.canSaveAs;
-        this.revealView.serverSideSave = this.options.saveOnServer;
-        this.revealView.startInEditMode = this.options.startInEditMode;
-        this.revealView.startWithNewVisualization = this.options.startWithNewVisualization;
+        this._revealView.canEdit = this.options.canEdit;
+        this._revealView.canSave = this.options.canSave;
+        this._revealView.canSaveAs = this.options.canSaveAs;
+        this._revealView.serverSideSave = this.options.saveOnServer;
+        this._revealView.startInEditMode = this.options.startInEditMode;
+        this._revealView.startWithNewVisualization = this.options.startWithNewVisualization;
 
         //header
-        this.revealView.showHeader = this.options.header.showHeader;
-        this.revealView.canAddVisualization = this.options.header.canAddVisualization;
-        this.revealView.showMenu = this.options.header.menu.showMenu;
-        this.revealView.showExportToExcel = this.options.header.menu.showExportToExcel;
-        this.revealView.showExportImage = this.options.header.menu.showExportToImage;
-        this.revealView.showExportToPDF = this.options.header.menu.showExportToPdf;
-        this.revealView.showExportToPowerpoint = this.options.header.menu.showExportToPowerPoint;
-        this.revealView.showRefresh = this.options.header.menu.showRefresh;
+        this._revealView.showHeader = this.options.header.showHeader;
+        this._revealView.canAddVisualization = this.options.header.canAddVisualization;
+        this._revealView.showMenu = this.options.header.menu.showMenu;
+        this._revealView.showExportToExcel = this.options.header.menu.showExportToExcel;
+        this._revealView.showExportImage = this.options.header.menu.showExportToImage;
+        this._revealView.showExportToPDF = this.options.header.menu.showExportToPdf;
+        this._revealView.showExportToPowerpoint = this.options.header.menu.showExportToPowerPoint;
+        this._revealView.showRefresh = this.options.header.menu.showRefresh;
 
         //filters
-        this.revealView.showFilters = this.options.filters.showFilters;
-        this.revealView.canAddDashboardFiter = this.options.filters.canAddDashboardFiter;
-        this.revealView.canAddDateFilter = this.options.filters.canAddDateFilter;
-        this.revealView.interactiveFilteringEnabled = this.options.filters.interactiveFiltering;
+        this._revealView.showFilters = this.options.filters.showFilters;
+        this._revealView.canAddDashboardFiter = this.options.filters.canAddDashboardFiter;
+        this._revealView.canAddDateFilter = this.options.filters.canAddDateFilter;
+        this._revealView.interactiveFilteringEnabled = this.options.filters.interactiveFiltering;
 
         //visualizations
-        this.revealView.canMaximizeVisualization = this.options.visualizations.canMaximize;
-        this.revealView.categoryGroupingSeparator = this.options.visualizations.categoryGroupingSeparator;
-        this.revealView.crosshairsEnabled = this.options.visualizations.crosshairs;
-        this.revealView.hoverTooltipsEnabled = this.options.visualizations.hoverTooltips;
-        this.revealView.showChangeVisualization = this.options.visualizations.showChangeChartType;
-        this.revealView.showStatisticalFunctions = this.options.visualizations.showStatisticalFunctions;
-        this.revealView.canCopyVisualization = this.options.visualizations.menu.showCopy;
-        this.revealView.canDuplicateVisualization = this.options.visualizations.menu.showDuplicate;
+        this._revealView.canMaximizeVisualization = this.options.visualizations.canMaximize;
+        this._revealView.categoryGroupingSeparator = this.options.visualizations.categoryGroupingSeparator;
+        this._revealView.crosshairsEnabled = this.options.visualizations.crosshairs;
+        this._revealView.hoverTooltipsEnabled = this.options.visualizations.hoverTooltips;
+        this._revealView.showChangeVisualization = this.options.visualizations.showChangeChartType;
+        this._revealView.showStatisticalFunctions = this.options.visualizations.showStatisticalFunctions;
+        this._revealView.canCopyVisualization = this.options.visualizations.menu.showCopy;
+        this._revealView.canDuplicateVisualization = this.options.visualizations.menu.showDuplicate;
 
         //dataSourceDialog
-        this.revealView.showDataSourceSelectionDialogSearch = this.options.dataSourceDialog.showSearch;
-        this.revealView.addDataSourceEnabledProviders = this.options.dataSourceDialog.dataSourceProviders;
+        this._revealView.showDataSourceSelectionDialogSearch = this.options.dataSourceDialog.showSearch;
+        this._revealView.addDataSourceEnabledProviders = this.options.dataSourceDialog.dataSourceProviders;
 
         //editor
-        this.revealView.availableChartTypes = this.options.editor.chartTypes;
-        this.revealView.defaultChartType = this.options.editor.defaultChartType;
-        this.revealView.canAddCalculatedFields = this.options.editor.showAddCalculatedFields;
-        this.revealView.canAddPostCalculatedFields = this.options.editor.canAddPostCalculatedFields;
-        this.revealView.showDataBlending = this.options.editor.showDataBlending;
-        this.revealView.showEditDataSource = this.options.editor.showEditDataSource;
-        this.revealView.showMachineLearningModelsIntegration = this.options.editor.showMachineLearning;
+        this._revealView.availableChartTypes = this.options.editor.chartTypes;
+        this._revealView.defaultChartType = this.options.editor.defaultChartType;
+        this._revealView.canAddCalculatedFields = this.options.editor.showAddCalculatedFields;
+        this._revealView.canAddPostCalculatedFields = this.options.editor.canAddPostCalculatedFields;
+        this._revealView.showDataBlending = this.options.editor.showDataBlending;
+        this._revealView.showEditDataSource = this.options.editor.showEditDataSource;
+        this._revealView.showMachineLearningModelsIntegration = this.options.editor.showMachineLearning;
 
     }
 
     updateLayout() {
-        this.revealView.updateSize();
+        this._revealView.updateSize();
     }
 
     updateTheme() {
-        this.revealView.refreshTheme();
+        this._revealView.refreshTheme();
     }
 
     onDataLoading?: (args: any) => void;
     onDataPointClicked?: (vizualization: any, cell: any, row: any) => void;
+    onDataSourceSelectionDialogOpening?: (args: any) => void;
     onDataSourcesRequested?: (onComplete: any, trigger: any) => void;
     onEditorClosed?: (args: any) => void;
     onEditorClosing?: (args: any) => void;

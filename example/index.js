@@ -15,6 +15,23 @@ dv.onDataSourcesRequested = (onComplete) => {
     onComplete(new $.ig.RevealDataSources([restDataSource], [], true));
 }
 
+dv.onMenuOpening = (viz, e) => {
+
+    if (viz === null) {
+        return;
+    }
+
+    console.log(viz)
+
+    const view = dv.revealView._dashboardView.getWidgetView(viz._widgetModel);
+
+    console.log(view);
+}
+
+dv.onSave = (rv, args) => {
+    console.log(args);
+}
+
 const btn = document.getElementById("button");
 btn.addEventListener('click', (event) => {
 
