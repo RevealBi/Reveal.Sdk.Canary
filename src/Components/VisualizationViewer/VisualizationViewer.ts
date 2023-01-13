@@ -48,7 +48,7 @@ export class VisualizationViewer {
         }
     }
 
-    setVisualization(dashboard: any, visualization: string | number | undefined) {
+    private setVisualization(dashboard: any, visualization: string | number | undefined) {
         if (visualization === undefined) return;
 
         if (typeof visualization === "string") {
@@ -71,7 +71,7 @@ export class VisualizationViewer {
         }
     }
 
-    updateOptions(options: Partial<VisualizationViewerOptions> | undefined) {
+    private updateOptions(options: Partial<VisualizationViewerOptions> | undefined) {
         if (options === undefined) {
             this.options = VisualizationViewer.defaultOptions;
         }
