@@ -1,6 +1,6 @@
-import { ViewerOptions, ChartType } from "./ViewerOptions";
+import { DashboardViewerOptions, ChartType } from "./DashboardViewerOptions";
 
-export const ViewerDefaults: ViewerOptions = {
+export const DashboardViewerDefaults: DashboardViewerOptions = {
     canEdit: true,
     canSave: true,
     canSaveAs: true,

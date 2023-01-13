@@ -1,23 +1,23 @@
-import { ViewerOptions } from "./ViewerOptions";
-import { ViewerDefaults } from "./ViewerDefaults";
+import { DashboardViewerOptions } from "./DashboardViewerOptions";
+import { DashboardViewerDefaults } from "./DashboardViewerDefaults";
 import { merge } from "../../Utilties/Merge";
 
 declare let $: any;
 
 export class DashboardViewer {
     private _revealView: any = null;    
-    static defaultOptions: ViewerOptions = ViewerDefaults;    
-    options: ViewerOptions = DashboardViewer.defaultOptions;
+    static defaultOptions: DashboardViewerOptions = DashboardViewerDefaults;    
+    options: DashboardViewerOptions = DashboardViewer.defaultOptions;
 
     constructor(selector: string)
     constructor(selector: string, dashboard: any)
-    constructor(selector: string, dashboard: any, options: Partial<ViewerOptions>)
-    constructor(selector: string, dashboard?: any, options?: Partial<ViewerOptions>) {
+    constructor(selector: string, dashboard: any, options: Partial<DashboardViewerOptions>)
+    constructor(selector: string, dashboard?: any, options?: Partial<DashboardViewerOptions>) {
         $.ig.RevealSdkSettings.enableNewCharts = true;
         this.init(selector, dashboard, options);
     }
 
-    private async init(selector: string, dashboard?: any, options?: Partial<ViewerOptions>): Promise<void> {
+    private async init(selector: string, dashboard?: any, options?: Partial<DashboardViewerOptions>): Promise<void> {
 
         if (typeof dashboard === "string") {
             dashboard = await $.ig.RVDashboard.loadDashboard(dashboard);
@@ -91,7 +91,7 @@ export class DashboardViewer {
         this._revealView.refreshDashboardData();
     }
 
-    updateOptions(options: Partial<ViewerOptions> | undefined) {
+    updateOptions(options: Partial<DashboardViewerOptions> | undefined) {
 
         if (options === undefined) {
             this.options = DashboardViewer.defaultOptions;

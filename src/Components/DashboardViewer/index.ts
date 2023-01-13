@@ -1,5 +1,4 @@
 export { DashboardViewer } from "./DashboardViewer";
-
 export { 
     ChartType, 
     DataSourceDialogOptions,
@@ -7,7 +6,6 @@ export {
     EditorOptions,
     FilterOptions,
     HeaderOptions,
-    MenuItem,
-    ViewerOptions,
+    DashboardViewerOptions,
     VisualizationOptions,    
-} from "./ViewerOptions";
+} from "./DashboardViewerOptions";

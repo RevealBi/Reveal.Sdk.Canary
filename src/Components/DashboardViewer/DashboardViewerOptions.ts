@@ -1,4 +1,6 @@
-export interface ViewerOptions {
+import { MenuItem } from "../Core/MenuItem";
+
+export interface DashboardViewerOptions {
     canEdit: boolean;
     canSave: boolean;
     canSaveAs: boolean;
@@ -46,12 +48,6 @@ export interface FilterOptions {
     showFilters: boolean;
     canAddDateFilter: boolean;
     canAddDashboardFiter: boolean;
-}
-
-export interface MenuItem {
-    icon: string;
-    title: string;
-    click: (viz: any) => void;
 }
 
 export interface VisualizationOptions {
