@@ -11,7 +11,6 @@ export class VisualizationViewer {
     static defaultOptions: VisualizationViewerOptions = VisualizationViewerDefaults;    
     options: VisualizationViewerOptions = VisualizationViewer.defaultOptions;
 
-    constructor(selector: string)
     constructor(selector: string, dashboard: any)
     constructor(selector: string, dashboard: any, visualization: string | number)
     constructor(selector: string, dashboard: any, visualization: string | number, options: Partial<VisualizationViewerOptions>)
