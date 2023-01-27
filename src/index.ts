@@ -1,4 +1,5 @@
 export { MenuItem } from "./Components/Core/MenuItem";
+
 export {
     DashboardViewer,
     DashboardViewerOptions,
@@ -10,7 +11,10 @@ export {
     ChartType,
     DataSourceProviderType
 } from "./Components/DashboardViewer";
+
 export {
     VisualizationViewer,
     VisualizationViewerOptions,
 } from "./Components/VisualizationViewer";
+
+export { RevealSdkSettings } from "./RevealSdkSettings";

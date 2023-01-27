@@ -1,4 +1,6 @@
-import { DashboardViewer, VisualizationViewer } from "../dist/esm/index.js";
+import { RevealSdkSettings, DashboardViewer, VisualizationViewer } from "../dist/esm/index.js";
+
+RevealSdkSettings.ServerUrl = "https://samples.revealbi.io/upmedia-backend/reveal-api/";
 
 const btn = document.getElementById("button");
 btn.addEventListener('click', (event) => {
