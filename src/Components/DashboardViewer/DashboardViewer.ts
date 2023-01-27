@@ -5,19 +5,20 @@ import { merge } from "../../Utilties/Merge";
 declare let $: any;
 
 export class DashboardViewer {
-    private _revealView: any = null;    
-    static defaultOptions: DashboardViewerOptions = DashboardViewerDefaults;    
+    private _revealView: any = null;
+    static defaultOptions: DashboardViewerOptions = DashboardViewerDefaults;
     options: DashboardViewerOptions = DashboardViewer.defaultOptions;
 
     constructor(selector: string)
     constructor(selector: string, dashboard: any)
     constructor(selector: string, dashboard: any, options: Partial<DashboardViewerOptions>)
-    constructor(selector: string, dashboard?: any, options?: Partial<DashboardViewerOptions>) {
+    constructor(selector: string, dashboard: any, options: Partial<DashboardViewerOptions>, onInit: () => void)
+    constructor(selector: string, dashboard?: any, options?: Partial<DashboardViewerOptions>, onInit?: () => void) {
         $.ig.RevealSdkSettings.enableNewCharts = true;
-        this.init(selector, dashboard, options);
+        this.init(selector, dashboard, options, onInit);
     }
 
-    private async init(selector: string, dashboard?: any, options?: Partial<DashboardViewerOptions>): Promise<void> {
+    private async init(selector: string, dashboard?: any, options?: Partial<DashboardViewerOptions>, onInit?: () => void): Promise<void> {
 
         if (typeof dashboard === "string") {
             dashboard = await $.ig.RVDashboard.loadDashboard(dashboard);
@@ -54,29 +55,33 @@ export class DashboardViewer {
 
             if (this.onMenuOpening !== undefined) {
                 this.onMenuOpening(viz, e);
-            }            
+            }
+        }
+
+        if (onInit) {
+            onInit();
         }
     }
 
-    exportToExcel() : void {
+    exportToExcel(): void {
         this._revealView._dashboardView.exportToExcel();
     }
 
-    exportToImage(showDialog: boolean = true) : void | Promise<Element | null> {
+    exportToImage(showDialog: boolean = true): void | Promise<Element | null> {
 
         if (showDialog) {
             this._revealView._dashboardView.exportImage();
             return;
         }
 
-        return this._revealView.toImage();        
+        return this._revealView.toImage();
     }
 
-    exportToPdf() : void {
+    exportToPdf(): void {
         this._revealView._dashboardView.exportToFormat("pdf");
     }
 
-    exportToPowerPoint() : void {
+    exportToPowerPoint(): void {
         this._revealView._dashboardView.exportToFormat("pptx");
     }
 
@@ -93,7 +98,7 @@ export class DashboardViewer {
 
     updateOptions(options: Partial<DashboardViewerOptions> | undefined) {
 
-        if (options === undefined) {
+        if (options === undefined || options === null) {
             this.options = DashboardViewer.defaultOptions;
         }
         else {
@@ -167,7 +172,7 @@ export class DashboardViewer {
     onImageExported?: (image: any) => void;
     onLinkedDashboardRequested?: (dashboardId: any, title: any) => Promise<any>;
     onMenuOpening?: (vizualization: any, args: any) => void;
-    onSave?: (rv:any, args: any) => void;
+    onSave?: (rv: any, args: any) => void;
     onSeriesColorAssigning?: (visualization: any, defaultColor: any, fieldName: any, categoryName: any) => void;
     onTooltipShowing?: (args: any) => void;
 }

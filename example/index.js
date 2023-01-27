@@ -7,32 +7,12 @@ btn.addEventListener('click', (event) => {
 
 });
 
+var dv = new DashboardViewer("#viewer", "Sales", {}, () => {
+    console.log("onInit");
+});
 
-//use title
-//new VisualizationViewer("#viewer", "Sales", "New vs Renewal Sales");
+console.log("After Creation");
 
-//or index
-//new VisualizationViewer("#viewer", "Sales", 1);
-
-//provide options
-// const vv = new VisualizationViewer("#viewer", "Sales", "New vs Renewal Sales", {
-//     showChangeChartType: true,
-//     menu: {
-//         showMenu: true,
-//         items: [
-//             {
-//                 title: "My Custom Item", click: (viz) => {
-//                     console.log(`I clicked viz with title: ${viz.title}`);
-//                 }
-//             }
-//         ]
-//     }
-// });
-
-
-//const dashboard = await $.ig.RVDashboard.loadDashboard("Marketing");
-
-var dv = new DashboardViewer("#viewer", "Sales");
 dv.onDataSourcesRequested = (onComplete) => {
     const restDataSource = new $.ig.RVRESTDataSource();
     restDataSource.id = "RestDataSource"
@@ -56,6 +36,27 @@ dv.onDataSourcesRequested = (onComplete) => {
 
 //     console.log(view);
 // }
+
+//use title
+//new VisualizationViewer("#viewer", "Sales", "New vs Renewal Sales");
+
+//or index
+//new VisualizationViewer("#viewer", "Sales", 1);
+
+//provide options
+// const vv = new VisualizationViewer("#viewer", "Sales", "New vs Renewal Sales", {
+//     showChangeChartType: true,
+//     menu: {
+//         showMenu: true,
+//         items: [
+//             {
+//                 title: "My Custom Item", click: (viz) => {
+//                     console.log(`I clicked viz with title: ${viz.title}`);
+//                 }
+//             }
+//         ]
+//     }
+// });
 
 
 
