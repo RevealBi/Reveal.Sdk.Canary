@@ -7,35 +7,18 @@ btn.addEventListener('click', (event) => {
 
 });
 
-var dv = new DashboardViewer("#viewer", "Sales", {}, () => {
-    console.log("onInit");
+var dv = new DashboardViewer("#viewer", "Sales", {
+    dataSources: [
+        { type: "REST", title: "Sales by Category", subtitle: "Excel2Json", url: "https://excel2json.io/api/share/6e0f06b3-72d3-4fec-7984-08da43f56bb9" },
+        {
+            type: "MicrosoftSqlServer", id: "MySQLServer", title: "My SQL Server", items: [
+                { table: "Products", title: "My Products Table" },
+                { table: "Orders", title: "My Orders Table" },
+                { table: "OrderDetails", title: "My OrderDetails Table" },
+            ]
+        }
+    ],
 });
-
-console.log("After Creation");
-
-dv.onDataSourcesRequested = (onComplete) => {
-    const restDataSource = new $.ig.RVRESTDataSource();
-    restDataSource.id = "RestDataSource"
-    restDataSource.url = "https://excel2json.io/api/share/6e0f06b3-72d3-4fec-7984-08da43f56bb9";
-    restDataSource.title = "Sales by Category";
-    restDataSource.subtitle = "Excel2Json";
-    restDataSource.useAnonymousAuthentication = true;
-
-    onComplete(new $.ig.RevealDataSources([restDataSource], [], true));
-}
-
-// dv.onMenuOpening = (viz, e) => {
-
-//     if (viz === null) {
-//         return;
-//     }
-
-//     console.log(viz)
-
-//     const view = dv.revealView._dashboardView.getWidgetView(viz._widgetModel);
-
-//     console.log(view);
-// }
 
 //use title
 //new VisualizationViewer("#viewer", "Sales", "New vs Renewal Sales");
@@ -57,6 +40,4 @@ dv.onDataSourcesRequested = (onComplete) => {
 //         ]
 //     }
 // });
-
-
 

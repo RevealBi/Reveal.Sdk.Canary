@@ -1,9 +1,11 @@
 import { MenuItem } from "../Core/MenuItem";
+import { DataSourcesConfig } from "./DataSourcesConfig";
 
 export interface DashboardViewerOptions {
     canEdit: boolean;
     canSave: boolean;
     canSaveAs: boolean;
+    dataSources: DataSourcesConfig;
     saveOnServer: boolean;
     startInEditMode: boolean;
     startWithNewVisualization: boolean;

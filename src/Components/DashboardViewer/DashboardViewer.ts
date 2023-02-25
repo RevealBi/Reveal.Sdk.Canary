@@ -1,6 +1,7 @@
 import { DashboardViewerOptions } from "./DashboardViewerOptions";
 import { DashboardViewerDefaults } from "./DashboardViewerDefaults";
 import { merge } from "../../Utilties/Merge";
+import { getRVDataSources } from "../../Utilties/DataSourceFactory";
 
 declare let $: any;
 
@@ -58,10 +59,15 @@ export class DashboardViewer {
             }
         }
 
+        this._revealView.onDataSourcesRequested = (onComplete: any) => {
+            const { dataSources, dataSourceItems } = getRVDataSources(this.options.dataSources); 
+            onComplete(new $.ig.RevealDataSources(dataSources, dataSourceItems, false));
+        }
+
         if (onInit) {
             onInit();
         }
-    }
+    }    
 
     exportToExcel(): void {
         this._revealView._dashboardView.exportToExcel();

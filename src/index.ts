@@ -1,20 +1,5 @@
-export { MenuItem } from "./Components/Core/MenuItem";
-
-export {
-    DashboardViewer,
-    DashboardViewerOptions,
-    DataSourceDialogOptions,
-    EditorOptions,
-    FilterOptions,
-    VisualizationOptions,
-    HeaderOptions,
-    ChartType,
-    DataSourceProviderType
-} from "./Components/DashboardViewer";
-
-export {
-    VisualizationViewer,
-    VisualizationViewerOptions,
-} from "./Components/VisualizationViewer";
-
 export { RevealSdkSettings } from "./RevealSdkSettings";
+export { MenuItem } from "./Components/Core/MenuItem";
+export * from "./Components/DashboardViewer";
+export * from "./Components/VisualizationViewer";
+export * from "./Components/DataSources";
