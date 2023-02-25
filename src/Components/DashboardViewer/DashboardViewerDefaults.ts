@@ -4,6 +4,7 @@ export const DashboardViewerDefaults: DashboardViewerOptions = {
     canEdit: true,
     canSave: true,
     canSaveAs: true,
+    dataSources: [],
     saveOnServer: true,
     startInEditMode: false,
     startWithNewVisualization: false,

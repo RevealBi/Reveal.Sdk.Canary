@@ -1,4 +1,5 @@
 export { DashboardViewer } from "./DashboardViewer";
+export { DataSourcesConfig, DataSourceConfig } from "./DataSourcesConfig";
 export { 
     ChartType, 
     DataSourceDialogOptions,
