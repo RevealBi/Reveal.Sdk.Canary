@@ -10,12 +10,36 @@ type DataSourceFactory = {
 };
 
 const dataSourceFactory: DataSourceFactory = {
+    "AmazonAthena": {
+        dataSourceCreator: () => new $.ig.RVAthenaDataSource(),
+        //dataSourceItemCreator: dataSource => new $.ig.RVAthenaDataSourceItem(dataSource),
+    },
+    "AmazonS3": {
+        dataSourceCreator: () => new $.ig.RVS3DataSource(),
+        //dataSourceItemCreator: dataSource => new $.ig.RVS3DataSourceItem(dataSource),
+    },
+    "GoogleBigQuery": {
+        dataSourceCreator: () => new $.ig.RVBigQueryDataSource(),
+        //dataSourceItemCreator: dataSource => new $.ig.RVBigQueryDataSourceItem(dataSource),
+    },
+    "MicrosoftAzureSqlServer": {
+        dataSourceCreator: () => new $.ig.RVAzureSqlDataSource(),
+        //dataSourceItemCreator: dataSource => new $.ig.RVAzureSqlDataSourceItem(dataSource),
+    },
     "MicrosoftSqlServer": {
         dataSourceCreator: () => new $.ig.RVSqlServerDataSource(),
         dataSourceItemCreator: dataSource => new $.ig.RVSqlServerDataSourceItem(dataSource),
     },
+    "MySql": {
+        dataSourceCreator: () => new $.ig.RVMySqlDataSource(),
+        //dataSourceItemCreator: dataSource => new $.ig.RVMySqlDataSourceItem(dataSource),
+    },
     "REST": {
         dataSourceCreator: () => new $.ig.RVRESTDataSource(),
+    },
+    "Snowflake": {
+        dataSourceCreator: () => new $.ig.RVSnowflakeDataSource(),
+        //dataSourceItemCreator: dataSource => new $.ig.RVSnowflakeDataSourceItem(dataSource),
     },
 };
 

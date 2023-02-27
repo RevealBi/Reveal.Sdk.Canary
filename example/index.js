@@ -16,7 +16,7 @@ var dv = new DashboardViewer("#viewer", "Sales", {
                 { table: "Orders", title: "My Orders Table" },
                 { table: "OrderDetails", title: "My OrderDetails Table" },
             ]
-        }
+        },
     ],
 });
 

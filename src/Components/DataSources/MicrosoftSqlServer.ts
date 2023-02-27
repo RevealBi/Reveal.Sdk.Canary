@@ -1,15 +1,15 @@
 import { DataSourceBase } from "./DataSourceBase";
 
-export type MsSqlServerDataSource = DataSourceBase & {
+export type MicrosoftSqlServerDataSource = DataSourceBase & {
     type: "MicrosoftSqlServer";
     database?: string;
     host?: string;
     port?: string;
     schema?: string;
-    items?: MsSqlServerDataSourceItem[];
+    items?: MicrosoftSqlServerDataSourceItem[];
 }
 
-export type MsSqlServerDataSourceItem = DataSourceBase & {
+export type MicrosoftSqlServerDataSourceItem = DataSourceBase & {
     table?: string;
     procedure?: string;
     procedureParameters?: string;
